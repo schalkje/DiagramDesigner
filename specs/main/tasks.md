@@ -138,15 +138,15 @@ This task breakdown implements a three-tier web application (React frontend, Fla
 ## Phase 3.6: API Layer - Flask Routes (14 tasks)
 
 ### Core API Setup
-- [ ] **T048** Create Flask app factory in backend/src/api/app.py (CORS, error handlers, health check endpoint)
-- [ ] **T049** Create JWT authentication middleware in backend/src/api/middleware/auth.py (verify Bearer token, attach user to request)
-- [ ] **T050** Create Pydantic request/response schemas in backend/src/api/schemas/ matching OpenAPI spec (import from openapi.yaml types)
+- [x] **T048** Create Flask app factory in backend/src/api/app.py (CORS, error handlers, health check endpoint)
+- [x] **T049** Create JWT authentication middleware in backend/src/api/middleware/auth.py (verify Bearer token, attach user to request)
+- [x] **T050** Create Pydantic request/response schemas in backend/src/api/schemas/ matching OpenAPI spec (import from openapi.yaml types)
 
 ### Authentication Routes
-- [ ] **T051** Implement POST /auth/login route in backend/src/api/routes/auth.py (calls AuthService.login, returns JWT + user)
+- [x] **T051** Implement POST /auth/login and /auth/register routes in backend/src/api/routes/auth.py (calls AuthService, returns JWT + user)
 
 ### Superdomain Routes
-- [ ] **T052** [P] Implement superdomain routes in backend/src/api/routes/superdomains.py:
+- [x] **T052** [P] Implement superdomain routes in backend/src/api/routes/superdomains.py:
   - GET /superdomains (list with pagination)
   - POST /superdomains (create, requires auth)
   - GET /superdomains/{id} (get by ID)
@@ -154,44 +154,44 @@ This task breakdown implements a three-tier web application (React frontend, Fla
   - DELETE /superdomains/{id} (delete with impact report)
 
 ### Domain Routes
-- [ ] **T053** [P] Implement domain routes in backend/src/api/routes/domains.py:
+- [x] **T053** [P] Implement domain routes in backend/src/api/routes/domains.py:
   - GET /domains (list with optional superdomainId filter)
   - POST /domains (create with superdomainId)
   - GET /domains/{id}, PUT /domains/{id}, DELETE /domains/{id}
 
 ### Entity Routes
-- [ ] **T054** [P] Implement entity routes in backend/src/api/routes/entities.py:
+- [x] **T054** [P] Implement entity routes in backend/src/api/routes/entities.py:
   - GET /entities (list with optional domainId filter)
   - POST /entities (create with domainId)
   - GET /entities/{id}, PUT /entities/{id}, DELETE /entities/{id}
 
 ### Attribute Routes
-- [ ] **T055** [P] Implement attribute routes in backend/src/api/routes/attributes.py:
-  - GET /entities/{entityId}/attributes (list for entity)
-  - POST /entities/{entityId}/attributes (create with data type validation)
+- [x] **T055** [P] Implement attribute routes in backend/src/api/routes/attributes.py:
+  - GET /attributes (list with optional entityId filter)
+  - POST /attributes (create with data type validation)
   - GET /attributes/{id}, PUT /attributes/{id}, DELETE /attributes/{id}
 
 ### Relationship Routes
-- [ ] **T056** [P] Implement relationship routes in backend/src/api/routes/relationships.py:
+- [x] **T056** [P] Implement relationship routes in backend/src/api/routes/relationships.py:
   - GET /relationships (list with optional entityId filter)
   - POST /relationships (create with cardinality validation)
-  - GET /relationships/{id}, PUT /relationships/{id}, DELETE /relationships/{id}
+  - GET /relationships/{id}, DELETE /relationships/{id}
 
 ### Diagram Routes
-- [ ] **T057** [P] Implement diagram routes in backend/src/api/routes/diagrams.py:
+- [x] **T057** [P] Implement diagram routes in backend/src/api/routes/diagrams.py:
   - GET /diagrams (list with optional tag filter)
   - POST /diagrams (create with tags array)
   - GET /diagrams/{id} (with full objects and relationships)
   - PUT /diagrams/{id}, DELETE /diagrams/{id}
 
 ### DiagramObject Routes
-- [ ] **T058** [P] Implement diagram object routes in backend/src/api/routes/diagram_objects.py:
+- [x] **T058** [P] Implement diagram object routes in backend/src/api/routes/diagrams.py:
   - POST /diagrams/{diagramId}/objects (add object to diagram)
   - PUT /diagrams/{diagramId}/objects/{objectId} (update position/style)
   - DELETE /diagrams/{diagramId}/objects/{objectId} (remove from diagram)
 
 ### API Integration
-- [ ] **T059** Wire all routes to Flask app in backend/src/api/app.py (register blueprints for auth, superdomains, domains, entities, attributes, relationships, diagrams)
+- [x] **T059** Wire all routes to Flask app in backend/src/api/app.py (register blueprints for auth, superdomains, domains, entities, attributes, relationships, diagrams)
 - [ ] **T060** Add request validation middleware in backend/src/api/middleware/validation.py (validate request bodies against Pydantic schemas)
 - [ ] **T061** Add logging middleware in backend/src/api/middleware/logging.py (log requests, responses, errors with timestamps)
 
