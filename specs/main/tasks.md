@@ -77,30 +77,30 @@ This task breakdown implements a three-tier web application (React frontend, Fla
 ## Phase 3.3: Database Schema & Models (10 tasks)
 
 ### Database Schema
-- [ ] **T023** Create initial Alembic migration for User table in backend/migrations/versions/001_create_users.py (id INT PK, email UK, username UK, password_hash, full_name, auth_provider ENUM, external_id, is_active, timestamps)
+- [x] **T023** Create initial Alembic migration for User table in backend/migrations/versions/001_create_users.py (id INT PK, email UK, username UK, password_hash, full_name, auth_provider ENUM, external_id, is_active, timestamps)
 
-- [ ] **T024** Create Alembic migration for Object Repository tables in backend/migrations/versions/002_create_object_repo.py:
+- [x] **T024** Create Alembic migration for Object Repository tables in backend/migrations/versions/002_create_object_repo.py:
   - Superdomain (id INT PK, name UK, description TEXT, timestamps, created_by FK)
   - Domain (id INT PK, superdomain_id FK, name, unique(superdomain_id, name), timestamps)
   - Entity (id INT PK, domain_id FK, name, unique(domain_id, name), timestamps)
   - Attribute (id BIGINT PK, entity_id FK, name, data_type, is_nullable, constraints JSONB, unique(entity_id, name), timestamps)
   - Relationship (id INT PK, source_entity_id FK, target_entity_id FK, source/target_attribute_id FK, cardinalities ENUM, roles, timestamps)
 
-- [ ] **T025** Create Alembic migration for Diagram Repository tables in backend/migrations/versions/003_create_diagram_repo.py:
+- [x] **T025** Create Alembic migration for Diagram Repository tables in backend/migrations/versions/003_create_diagram_repo.py:
   - Diagram (id INT PK, name, description, tags JSONB, canvas_settings JSONB, timestamps)
   - DiagramObject (id INT PK, diagram_id FK, object_type ENUM, object_id INT, position x/y, width/height, z_index, visual_style JSONB, unique(diagram_id, object_type, object_id))
   - DiagramRelationship (id INT PK, diagram_id FK, relationship_id FK, is_visible, path_points JSONB, anchors, visual_style JSONB, unique(diagram_id, relationship_id))
 
-- [ ] **T026** Create Alembic migration for indexes in backend/migrations/versions/004_create_indexes.py (see data-model.md Performance section for full index list)
+- [x] **T026** Create Alembic migration for indexes in backend/migrations/versions/004_create_indexes.py (see data-model.md Performance section for full index list)
 
 - [ ] **T027** Run Alembic migrations on local PostgreSQL (alembic upgrade head) and verify all tables created
 
 ### SQLAlchemy Models (can run in parallel after migrations)
-- [ ] **T028** [P] Create User model in backend/src/models/user.py (with password hashing, auth provider enum)
-- [ ] **T029** [P] Create Superdomain, Domain, Entity, Attribute models in backend/src/models/object_repository.py (with relationships and validation)
-- [ ] **T030** [P] Create Relationship model in backend/src/models/relationship.py (with cardinality enum: ZERO_ONE, ONE, ZERO_MANY, ONE_MANY)
-- [ ] **T031** [P] Create Diagram, DiagramObject, DiagramRelationship models in backend/src/models/diagram_repository.py (with JSONB fields for tags, canvas_settings, visual_style)
-- [ ] **T032** Create database session factory in backend/src/utils/database.py (SQLAlchemy session management, connection pooling)
+- [x] **T028** [P] Create User model in backend/src/models/user.py (with password hashing, auth provider enum)
+- [x] **T029** [P] Create Superdomain, Domain, Entity, Attribute models in backend/src/models/object_repository.py (with relationships and validation)
+- [x] **T030** [P] Create Relationship model in backend/src/models/relationship.py (with cardinality enum: ZERO_ONE, ONE, ZERO_MANY, ONE_MANY)
+- [x] **T031** [P] Create Diagram, DiagramObject, DiagramRelationship models in backend/src/models/diagram_repository.py (with JSONB fields for tags, canvas_settings, visual_style)
+- [x] **T032** Create database session factory in backend/src/utils/database.py (SQLAlchemy session management, connection pooling)
 
 **Dependencies**: T023-T026 sequential (migrations), T027 after T026, T028-T031 [P] after T027, T032 after models
 
@@ -108,14 +108,14 @@ This task breakdown implements a three-tier web application (React frontend, Fla
 
 ## Phase 3.4: Repository Layer (8 tasks)
 
-- [ ] **T033** [P] Create BaseRepository in backend/src/repositories/base_repository.py (generic CRUD: get, list, create, update, delete with pagination)
-- [ ] **T034** [P] Create SuperdomainRepository in backend/src/repositories/superdomain_repository.py (extends BaseRepository, add cascade delete analysis)
-- [ ] **T035** [P] Create DomainRepository in backend/src/repositories/domain_repository.py (filter by superdomain_id)
-- [ ] **T036** [P] Create EntityRepository in backend/src/repositories/entity_repository.py (filter by domain_id, include attributes)
-- [ ] **T037** [P] Create AttributeRepository in backend/src/repositories/attribute_repository.py (filter by entity_id, validate data_type enum)
-- [ ] **T038** [P] Create RelationshipRepository in backend/src/repositories/relationship_repository.py (filter by entity, validate cardinality)
-- [ ] **T039** [P] Create DiagramRepository in backend/src/repositories/diagram_repository.py (include objects and relationships in get_by_id)
-- [ ] **T040** [P] Create UserRepository in backend/src/repositories/user_repository.py (authenticate method, find by email/username)
+- [x] **T033** [P] Create BaseRepository in backend/src/repositories/base_repository.py (generic CRUD: get, list, create, update, delete with pagination)
+- [x] **T034** [P] Create SuperdomainRepository in backend/src/repositories/superdomain_repository.py (extends BaseRepository, add cascade delete analysis)
+- [x] **T035** [P] Create DomainRepository in backend/src/repositories/domain_repository.py (filter by superdomain_id)
+- [x] **T036** [P] Create EntityRepository in backend/src/repositories/entity_repository.py (filter by domain_id, include attributes)
+- [x] **T037** [P] Create AttributeRepository in backend/src/repositories/attribute_repository.py (filter by entity_id, validate data_type enum)
+- [x] **T038** [P] Create RelationshipRepository in backend/src/repositories/relationship_repository.py (filter by entity, validate cardinality)
+- [x] **T039** [P] Create DiagramRepository in backend/src/repositories/diagram_repository.py (include objects and relationships in get_by_id)
+- [x] **T040** [P] Create UserRepository in backend/src/repositories/user_repository.py (authenticate method, find by email/username)
 
 **Dependencies**: All repositories [P] after T033 (BaseRepository) and T032 (database session)
 
@@ -123,13 +123,13 @@ This task breakdown implements a three-tier web application (React frontend, Fla
 
 ## Phase 3.5: Service Layer (7 tasks)
 
-- [ ] **T041** [P] Create SuperdomainService in backend/src/services/superdomain_service.py (CRUD + cascade delete with impact analysis showing affected domains/entities)
-- [ ] **T042** [P] Create DomainService in backend/src/services/domain_service.py (CRUD + validation: unique name within superdomain)
-- [ ] **T043** [P] Create EntityService in backend/src/services/entity_service.py (CRUD + validation: unique name within domain, cascade delete with relationship check)
-- [ ] **T044** [P] Create AttributeService in backend/src/services/attribute_service.py (CRUD + validation: unique name within entity, data_type enum validation)
-- [ ] **T045** [P] Create RelationshipService in backend/src/services/relationship_service.py (CRUD + validation: entities exist, cardinality valid, multiple relationships require unique roles)
-- [ ] **T046** [P] Create DiagramService in backend/src/services/diagram_service.py (CRUD + add/remove objects, update positions, auto-display relationships when both entities present)
-- [ ] **T047** [P] Create AuthService in backend/src/services/auth_service.py (register, login, JWT token generation, password hashing with bcrypt)
+- [x] **T041** [P] Create SuperdomainService in backend/src/services/superdomain_service.py (CRUD + cascade delete with impact analysis showing affected domains/entities)
+- [x] **T042** [P] Create DomainService in backend/src/services/domain_service.py (CRUD + validation: unique name within superdomain)
+- [x] **T043** [P] Create EntityService in backend/src/services/entity_service.py (CRUD + validation: unique name within domain, cascade delete with relationship check)
+- [x] **T044** [P] Create AttributeService in backend/src/services/attribute_service.py (CRUD + validation: unique name within entity, data_type enum validation)
+- [x] **T045** [P] Create RelationshipService in backend/src/services/relationship_service.py (CRUD + validation: entities exist, cardinality valid, multiple relationships require unique roles)
+- [x] **T046** [P] Create DiagramService in backend/src/services/diagram_service.py (CRUD + add/remove objects, update positions, auto-display relationships when both entities present)
+- [x] **T047** [P] Create AuthService in backend/src/services/auth_service.py (register, login, JWT token generation, password hashing with bcrypt)
 
 **Dependencies**: All services [P] after repositories (T033-T040)
 

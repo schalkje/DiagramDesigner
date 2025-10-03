@@ -15,9 +15,16 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
-target_metadata = None
+import sys
+from pathlib import Path
+
+# Add src directory to path so we can import models
+backend_dir = Path(__file__).parent.parent
+sys.path.insert(0, str(backend_dir / "src"))
+
+from models import Base
+
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
