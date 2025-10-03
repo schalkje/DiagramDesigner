@@ -1,50 +1,122 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+SYNC IMPACT REPORT:
+Version: 0.0.0 → 1.0.0
+Change type: Initial constitution creation
+Rationale: MAJOR bump - establishing foundational governance framework
+
+Modified principles: N/A (initial creation)
+Added sections:
+  - Core Principles (5 principles: User-Centric Design, Visual Clarity, Modular Architecture, Test-Driven Development, Performance & Responsiveness)
+  - Quality Standards
+  - Development Workflow
+  - Governance
+
+Templates status:
+  ✅ plan-template.md - updated with specific constitution check items and version reference
+  ✅ spec-template.md - reviewed, requirements alignment verified (no changes needed)
+  ✅ tasks-template.md - reviewed, task categorization compatible (no changes needed)
+  ✅ agent-file-template.md - reviewed, no agent-specific changes needed
+
+Follow-up TODOs: None - all placeholders resolved
+-->
+
+# DiagramDesigner Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. User-Centric Design
+Every feature MUST prioritize user experience and intuitive interaction. Design decisions MUST be validated against real user workflows for diagram creation, editing, and collaboration. Features that add complexity without clear user value are prohibited.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+**Rationale**: Diagram tools succeed when they reduce cognitive load and accelerate visual communication, not when they showcase technical capabilities at the expense of usability.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Visual Clarity
+The diagram rendering engine MUST maintain pixel-perfect accuracy, consistent styling, and performant rendering across all supported export formats. Visual output quality is non-negotiable.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**Rationale**: A diagram tool's primary value is visual communication - any degradation in output quality undermines the core product value.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. Modular Architecture
+All features MUST be implemented as independent, composable modules with clear interfaces. Diagram components (shapes, connectors, layouts) MUST be self-contained and reusable across different diagram types.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+**Rationale**: Modular design enables rapid feature iteration, easier testing, and allows users to combine capabilities in unexpected ways.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. Test-Driven Development (NON-NEGOTIABLE)
+TDD is MANDATORY for all code changes:
+- Tests MUST be written before implementation
+- Tests MUST fail initially (red phase)
+- Implementation proceeds only after test approval
+- Red-Green-Refactor cycle strictly enforced
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**Rationale**: Diagram tools involve complex state management and rendering logic where bugs directly impact user deliverables. TDD ensures correctness from the start.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### V. Performance & Responsiveness
+The application MUST maintain 60fps interaction during diagram editing and MUST handle diagrams with 1000+ elements without degradation. All user actions MUST provide feedback within 100ms.
+
+**Rationale**: Diagram creation is a creative flow activity - performance lag breaks concentration and reduces productivity.
+
+## Quality Standards
+
+### Testing Requirements
+- **Unit tests**: All business logic, algorithms, and utilities
+- **Integration tests**: Component interactions, state management, persistence
+- **Visual regression tests**: Rendering output across formats (SVG, PNG, PDF)
+- **Performance benchmarks**: Frame rate, memory usage, load times
+
+### Code Quality
+- All code MUST pass linting and formatting checks
+- Code reviews MUST verify constitutional compliance
+- Complexity MUST be justified and documented in Complexity Tracking sections
+- Technical debt MUST be tracked and scheduled for resolution
+
+### Documentation
+- API contracts MUST use OpenAPI/GraphQL schemas
+- User-facing features MUST include quickstart guides
+- Architecture decisions MUST be documented in research.md files
+- Breaking changes MUST include migration guides
+
+## Development Workflow
+
+### Feature Development Process
+1. Feature specification (spec.md) defines WHAT and WHY
+2. Implementation plan (plan.md) addresses HOW with technical research
+3. Contract-first design generates API schemas and data models
+4. Tests written and approved before implementation
+5. Implementation follows tasks.md execution order
+6. Validation against quickstart scenarios
+
+### Code Review Requirements
+- All PRs MUST pass automated tests and constitutional checks
+- Reviewers MUST verify TDD compliance (tests committed before implementation)
+- Performance regressions MUST be identified and addressed
+- Visual changes MUST include before/after screenshots or recordings
+
+### Constitutional Compliance
+- Constitution supersedes all other practices and conventions
+- Violations require explicit justification in Complexity Tracking
+- Amendments require documentation, approval, and migration plan
+- This constitution is version-controlled and follows semantic versioning
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+### Amendment Process
+1. Proposed changes documented with rationale
+2. Impact analysis on existing features and templates
+3. Team approval required for MINOR/MAJOR changes
+4. Version bump following semantic versioning:
+   - MAJOR: Backward incompatible principle changes or removals
+   - MINOR: New principles or materially expanded guidance
+   - PATCH: Clarifications, wording fixes, non-semantic refinements
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+### Versioning Policy
+- Constitution version tracked at bottom of this document
+- Ratification date marks original adoption
+- Last amended date updated with each change
+- All feature plans reference constitution version used
+
+### Compliance Review
+- Weekly reviews of merged PRs for constitutional adherence
+- Quarterly architecture reviews to assess accumulated technical debt
+- Annual constitution review to assess relevance and effectiveness
+
+---
+
+**Version**: 1.0.0 | **Ratified**: 2025-10-03 | **Last Amended**: 2025-10-03

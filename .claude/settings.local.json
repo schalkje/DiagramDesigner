@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(git log:*)",
+      "Read(//c/repo/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

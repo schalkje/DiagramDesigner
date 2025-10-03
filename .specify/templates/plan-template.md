@@ -47,7 +47,30 @@
 ## Constitution Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+### I. User-Centric Design
+- [ ] Feature validated against real user workflows
+- [ ] No complexity without clear user value
+- [ ] User experience prioritized in design decisions
+
+### II. Visual Clarity
+- [ ] Rendering quality maintained across all export formats
+- [ ] Pixel-perfect accuracy ensured
+- [ ] Consistent styling verified
+
+### III. Modular Architecture
+- [ ] Feature implemented as independent module
+- [ ] Clear interfaces defined
+- [ ] Components reusable across diagram types
+
+### IV. Test-Driven Development
+- [ ] TDD approach planned (tests before implementation)
+- [ ] Red-Green-Refactor cycle documented
+- [ ] Test approval process defined
+
+### V. Performance & Responsiveness
+- [ ] 60fps interaction maintained
+- [ ] Handles 1000+ elements without degradation
+- [ ] User actions provide <100ms feedback
 
 ## Project Structure
 
@@ -216,4 +239,4 @@ directories captured above]
 - [ ] Complexity deviations documented
 
 ---
-*Based on Constitution v2.1.1 - See `/memory/constitution.md`*
+*Based on Constitution v1.0.0 - See `.specify/memory/constitution.md`*
