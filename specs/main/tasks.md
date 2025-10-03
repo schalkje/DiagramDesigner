@@ -21,18 +21,18 @@ This task breakdown implements a three-tier web application (React frontend, Fla
 ## Phase 3.1: Infrastructure & Setup (8 tasks)
 
 ### Backend Setup
-- [ ] **T001** Create backend project structure (backend/src/{models,services,api,repositories,utils})
-- [ ] **T002** Initialize Python 3.12+ project with Flask 3.x, SQLAlchemy 2.x, Alembic dependencies in backend/requirements.txt
-- [ ] **T003** [P] Configure backend linting (Ruff) and formatting in backend/pyproject.toml
-- [ ] **T004** [P] Create Alembic configuration in backend/alembic.ini and backend/migrations/env.py
+- [x] **T001** Create backend project structure (backend/src/{models,services,api,repositories,utils})
+- [x] **T002** Initialize Python 3.12+ project with Flask 3.x, SQLAlchemy 2.x, Alembic dependencies in backend/requirements.txt
+- [x] **T003** [P] Configure backend linting (Ruff) and formatting in backend/pyproject.toml
+- [x] **T004** [P] Create Alembic configuration in backend/alembic.ini and backend/migrations/env.py
 
 ### Frontend Setup
-- [ ] **T005** Create frontend project structure with Vite (frontend/src/{components,pages,services,hooks,store,types})
-- [ ] **T006** Initialize Node.js 18+ project with React 18+, TypeScript 5.x, React-Flow dependencies in frontend/package.json
-- [ ] **T007** [P] Configure frontend linting (ESLint) and Vitest in frontend/vite.config.ts
+- [x] **T005** Create frontend project structure with Vite (frontend/src/{components,pages,services,hooks,store,types})
+- [x] **T006** Initialize Node.js 18+ project with React 18+, TypeScript 5.x, React-Flow dependencies in frontend/package.json
+- [x] **T007** [P] Configure frontend linting (ESLint) and Vitest in frontend/vite.config.ts
 
 ### Infrastructure Setup
-- [ ] **T008** Create Docker Compose configuration in infrastructure/local/docker-compose.yml for PostgreSQL, backend (port 5000), frontend (port 3000)
+- [x] **T008** Create Docker Compose configuration in infrastructure/local/docker-compose.yml for PostgreSQL, backend (port 5000), frontend (port 3000)
 
 **Dependencies**: T001-T002 before T003-T004; T005-T006 before T007; All setup before tests
 
@@ -43,32 +43,32 @@ This task breakdown implements a three-tier web application (React frontend, Fla
 **⚠️ CRITICAL**: These tests MUST be written and MUST FAIL before ANY implementation. This validates TDD approach.
 
 ### Authentication Contract Tests
-- [ ] **T009** [P] Contract test POST /auth/login in backend/tests/contract/test_auth_login.py (must validate request/response schema, return 401 for invalid credentials)
+- [x] **T009** [P] Contract test POST /auth/login in backend/tests/contract/test_auth_login.py (must validate request/response schema, return 401 for invalid credentials)
 
 ### Superdomain Contract Tests
-- [ ] **T010** [P] Contract test GET /superdomains in backend/tests/contract/test_superdomains_list.py (must validate pagination schema)
-- [ ] **T011** [P] Contract test POST /superdomains in backend/tests/contract/test_superdomains_create.py (must validate SuperdomainCreate schema, return 201)
-- [ ] **T012** [P] Contract test GET /superdomains/{id} in backend/tests/contract/test_superdomains_get.py (must validate Superdomain schema, return 404 for missing)
-- [ ] **T013** [P] Contract test PUT /superdomains/{id} in backend/tests/contract/test_superdomains_update.py (must validate SuperdomainUpdate schema)
-- [ ] **T014** [P] Contract test DELETE /superdomains/{id} in backend/tests/contract/test_superdomains_delete.py (must validate DeleteImpact schema)
+- [x] **T010** [P] Contract test GET /superdomains in backend/tests/contract/test_superdomains_list.py (must validate pagination schema)
+- [x] **T011** [P] Contract test POST /superdomains in backend/tests/contract/test_superdomains_create.py (must validate SuperdomainCreate schema, return 201)
+- [x] **T012** [P] Contract test GET /superdomains/{id} in backend/tests/contract/test_superdomains_get.py (must validate Superdomain schema, return 404 for missing)
+- [x] **T013** [P] Contract test PUT /superdomains/{id} in backend/tests/contract/test_superdomains_update.py (must validate SuperdomainUpdate schema)
+- [x] **T014** [P] Contract test DELETE /superdomains/{id} in backend/tests/contract/test_superdomains_delete.py (must validate DeleteImpact schema)
 
 ### Domain Contract Tests
-- [ ] **T015** [P] Contract test GET /domains in backend/tests/contract/test_domains_list.py (must validate filtering by superdomainId)
-- [ ] **T016** [P] Contract test POST /domains in backend/tests/contract/test_domains_create.py (must validate DomainCreate schema with superdomainId)
+- [x] **T015** [P] Contract test GET /domains in backend/tests/contract/test_domains_list.py (must validate filtering by superdomainId)
+- [x] **T016** [P] Contract test POST /domains in backend/tests/contract/test_domains_create.py (must validate DomainCreate schema with superdomainId)
 
 ### Entity Contract Tests
-- [ ] **T017** [P] Contract test GET /entities in backend/tests/contract/test_entities_list.py (must validate filtering by domainId)
-- [ ] **T018** [P] Contract test POST /entities in backend/tests/contract/test_entities_create.py (must validate EntityCreate schema with domainId)
+- [x] **T017** [P] Contract test GET /entities in backend/tests/contract/test_entities_list.py (must validate filtering by domainId)
+- [x] **T018** [P] Contract test POST /entities in backend/tests/contract/test_entities_create.py (must validate EntityCreate schema with domainId)
 
 ### Attribute Contract Tests
-- [ ] **T019** [P] Contract test GET /entities/{entityId}/attributes in backend/tests/contract/test_attributes_list.py (must validate Attribute schema)
-- [ ] **T020** [P] Contract test POST /entities/{entityId}/attributes in backend/tests/contract/test_attributes_create.py (must validate AttributeCreate schema with dataType enum)
+- [x] **T019** [P] Contract test GET /entities/{entityId}/attributes in backend/tests/contract/test_attributes_list.py (must validate Attribute schema)
+- [x] **T020** [P] Contract test POST /entities/{entityId}/attributes in backend/tests/contract/test_attributes_create.py (must validate AttributeCreate schema with dataType enum)
 
 ### Relationship Contract Tests
-- [ ] **T021** [P] Contract test POST /relationships in backend/tests/contract/test_relationships_create.py (must validate RelationshipCreate schema with cardinality enums)
+- [x] **T021** [P] Contract test POST /relationships in backend/tests/contract/test_relationships_create.py (must validate RelationshipCreate schema with cardinality enums)
 
 ### Diagram Contract Tests
-- [ ] **T022** [P] Contract test POST /diagrams in backend/tests/contract/test_diagrams_create.py (must validate DiagramCreate schema with tags array)
+- [x] **T022** [P] Contract test POST /diagrams in backend/tests/contract/test_diagrams_create.py (must validate DiagramCreate schema with tags array)
 
 **Dependencies**: All contract tests are independent [P]. Must complete before any implementation tasks.
 

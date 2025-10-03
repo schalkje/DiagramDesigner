@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: diagramdesigner-db
+    environment:
+      POSTGRES_DB: diagramdesigner
+      POSTGRES_USER: diagramdesigner
+      POSTGRES_PASSWORD: diagramdesigner
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U diagramdesigner"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ../../backend
+      dockerfile: Dockerfile
+    container_name: diagramdesigner-backend
+    environment:
+      DATABASE_URL: postgresql://diagramdesigner:diagramdesigner@db:5432/diagramdesigner
+      FLASK_ENV: development
+      FLASK_DEBUG: 1
+      SECRET_KEY: dev-secret-key-change-in-production
+    ports:
+      - "5000:5000"
+    volumes:
+      - ../../backend:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    command: flask run --host=0.0.0.0
+
+  frontend:
+    build:
+      context: ../../frontend
+      dockerfile: Dockerfile
+    container_name: diagramdesigner-frontend
+    environment:
+      VITE_API_BASE_URL: http://localhost:5000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../../frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    command: npm run dev -- --host
+
+volumes:
+  postgres_data:
