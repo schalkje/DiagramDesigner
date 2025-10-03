@@ -3,7 +3,9 @@
     "allow": [
       "Bash(grep:*)",
       "Bash(git log:*)",
-      "Read(//c/repo/**)"
+      "Read(//c/repo/**)",
+      "Bash(powershell:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []
