@@ -5,7 +5,9 @@
       "Bash(git log:*)",
       "Read(//c/repo/**)",
       "Bash(powershell:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(docker-compose:*)",
+      "Bash(docker-compose up:*)"
     ],
     "deny": [],
     "ask": []
