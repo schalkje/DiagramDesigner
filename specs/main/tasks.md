@@ -251,11 +251,11 @@ This task breakdown implements a three-tier web application (React frontend, Fla
 
 ## Phase 3.10: Frontend - Pages & Routing (5 tasks)
 
-- [ ] **T084** Create routing in frontend/src/App.tsx (React Router with routes: /login, /register, /repository, /diagrams, /diagrams/:id)
-- [ ] **T085** [P] Create RepositoryBrowser page in frontend/src/pages/RepositoryBrowser.tsx (layout with RepositoryTree, EntityCard, forms)
-- [ ] **T086** [P] Create DiagramEditor page in frontend/src/pages/DiagramEditor.tsx (layout with DiagramCanvas, object repository panel, toolbar)
-- [ ] **T087** [P] Create DiagramList page in frontend/src/pages/DiagramList.tsx (grid of diagram cards, create new button)
-- [ ] **T088** [P] Create Dashboard page in frontend/src/pages/Dashboard.tsx (landing page with quick access to repository and diagrams)
+- [x] **T084** Create routing in frontend/src/App.tsx (React Router with routes: /login, /register, /repository, /diagrams, /diagrams/:id)
+- [x] **T085** [P] Create RepositoryBrowser page in frontend/src/pages/RepositoryBrowser.tsx (layout with RepositoryTree, EntityCard, forms)
+- [x] **T086** [P] Create DiagramEditor page in frontend/src/pages/DiagramEditor.tsx (layout with DiagramCanvas, object repository panel, toolbar)
+- [x] **T087** [P] Create DiagramList page in frontend/src/pages/DiagramListPage.tsx (grid of diagram cards, create new button)
+- [x] **T088** [P] Create Dashboard page in frontend/src/pages/Dashboard.tsx (landing page with quick access to repository and diagrams)
 
 **Dependencies**: T084 before pages; T085-T088 [P] after T084 and components (T072-T083)
 
