@@ -1,5 +1,23 @@
 <!--
 SYNC IMPACT REPORT:
+Version: 1.0.0 → 1.1.0
+Change type: Documentation standards enhancement
+Rationale: MINOR bump - adding new documentation standard for diagrams
+
+Modified principles: N/A
+Modified sections:
+  - Quality Standards > Documentation: Added Mermaid diagram requirement
+
+Templates status:
+  ✅ All templates compatible - no changes needed
+  ✅ CLAUDE.md - updated with Mermaid diagram standards and examples
+  ✅ data-model.md - updated to use Mermaid ER diagram
+
+Follow-up TODOs: None - standard is backward compatible
+-->
+
+<!--
+PREVIOUS SYNC IMPACT REPORT (v1.0.0):
 Version: 0.0.0 → 1.0.0
 Change type: Initial constitution creation
 Rationale: MAJOR bump - establishing foundational governance framework
@@ -72,6 +90,7 @@ The application MUST maintain 60fps interaction during diagram editing and MUST 
 - User-facing features MUST include quickstart guides
 - Architecture decisions MUST be documented in research.md files
 - Breaking changes MUST include migration guides
+- **All diagrams MUST use Mermaid syntax** for consistency and renderability (no ASCII art or images)
 
 ## Development Workflow
 
@@ -119,4 +138,4 @@ The application MUST maintain 60fps interaction during diagram editing and MUST 
 
 ---
 
-**Version**: 1.0.0 | **Ratified**: 2025-10-03 | **Last Amended**: 2025-10-03
+**Version**: 1.1.0 | **Ratified**: 2025-10-03 | **Last Amended**: 2025-10-03

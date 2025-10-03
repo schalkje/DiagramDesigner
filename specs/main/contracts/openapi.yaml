@@ -1,0 +1,1221 @@
+openapi: 3.0.3
+info:
+  title: DiagramDesigner API
+  description: REST API for DiagramDesigner application - create and manage data model diagrams
+  version: 1.0.0
+  contact:
+    name: DiagramDesigner Team
+
+servers:
+  - url: http://localhost:5000/api/v1
+    description: Local development server
+  - url: https://diagramdesigner.azurewebsites.net/api/v1
+    description: Production Azure server
+
+tags:
+  - name: Superdomains
+    description: Top-level containers in data model hierarchy
+  - name: Domains
+    description: Business areas within superdomains
+  - name: Entities
+    description: Business objects with attributes
+  - name: Attributes
+    description: Properties of entities
+  - name: Relationships
+    description: Connections between entities
+  - name: Diagrams
+    description: Visual perspectives on the data model
+  - name: Auth
+    description: Authentication endpoints
+
+paths:
+  # Authentication
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user:
+                    $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # Superdomains
+  /superdomains:
+    get:
+      tags: [Superdomains]
+      summary: List all superdomains
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PageSizeParam'
+      responses:
+        '200':
+          description: List of superdomains
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Superdomain'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+    post:
+      tags: [Superdomains]
+      summary: Create new superdomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SuperdomainCreate'
+      responses:
+        '201':
+          description: Superdomain created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Superdomain'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /superdomains/{superdomainId}:
+    parameters:
+      - name: superdomainId
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      tags: [Superdomains]
+      summary: Get superdomain by ID
+      responses:
+        '200':
+          description: Superdomain details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Superdomain'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Superdomains]
+      summary: Update superdomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SuperdomainUpdate'
+      responses:
+        '200':
+          description: Superdomain updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Superdomain'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags: [Superdomains]
+      summary: Delete superdomain
+      responses:
+        '200':
+          description: Superdomain deleted with impact report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteImpact'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # Domains
+  /domains:
+    get:
+      tags: [Domains]
+      summary: List all domains
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PageSizeParam'
+        - name: superdomainId
+          in: query
+          schema:
+            type: integer
+          description: Filter by superdomain
+      responses:
+        '200':
+          description: List of domains
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Domain'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+    post:
+      tags: [Domains]
+      summary: Create new domain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainCreate'
+      responses:
+        '201':
+          description: Domain created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /domains/{domainId}:
+    parameters:
+      - name: domainId
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      tags: [Domains]
+      summary: Get domain by ID
+      responses:
+        '200':
+          description: Domain details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Domains]
+      summary: Update domain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainUpdate'
+      responses:
+        '200':
+          description: Domain updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags: [Domains]
+      summary: Delete domain
+      responses:
+        '200':
+          description: Domain deleted with impact report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteImpact'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # Entities
+  /entities:
+    get:
+      tags: [Entities]
+      summary: List all entities
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PageSizeParam'
+        - name: domainId
+          in: query
+          schema:
+            type: integer
+          description: Filter by domain
+      responses:
+        '200':
+          description: List of entities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Entity'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+    post:
+      tags: [Entities]
+      summary: Create new entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntityCreate'
+      responses:
+        '201':
+          description: Entity created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /entities/{entityId}:
+    parameters:
+      - name: entityId
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      tags: [Entities]
+      summary: Get entity by ID
+      responses:
+        '200':
+          description: Entity details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Entities]
+      summary: Update entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntityUpdate'
+      responses:
+        '200':
+          description: Entity updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags: [Entities]
+      summary: Delete entity
+      responses:
+        '200':
+          description: Entity deleted with impact report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteImpact'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # Attributes
+  /entities/{entityId}/attributes:
+    parameters:
+      - name: entityId
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      tags: [Attributes]
+      summary: List attributes for entity
+      responses:
+        '200':
+          description: List of attributes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Attribute'
+    post:
+      tags: [Attributes]
+      summary: Create attribute for entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttributeCreate'
+      responses:
+        '201':
+          description: Attribute created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attribute'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /attributes/{attributeId}:
+    parameters:
+      - name: attributeId
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      tags: [Attributes]
+      summary: Get attribute by ID
+      responses:
+        '200':
+          description: Attribute details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attribute'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Attributes]
+      summary: Update attribute
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttributeUpdate'
+      responses:
+        '200':
+          description: Attribute updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attribute'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags: [Attributes]
+      summary: Delete attribute
+      responses:
+        '200':
+          description: Attribute deleted with impact report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteImpact'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # Relationships
+  /relationships:
+    get:
+      tags: [Relationships]
+      summary: List all relationships
+      parameters:
+        - name: entityId
+          in: query
+          schema:
+            type: integer
+          description: Filter by entity (source or target)
+      responses:
+        '200':
+          description: List of relationships
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Relationship'
+    post:
+      tags: [Relationships]
+      summary: Create new relationship
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelationshipCreate'
+      responses:
+        '201':
+          description: Relationship created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relationship'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /relationships/{relationshipId}:
+    parameters:
+      - name: relationshipId
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      tags: [Relationships]
+      summary: Get relationship by ID
+      responses:
+        '200':
+          description: Relationship details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relationship'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Relationships]
+      summary: Update relationship
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelationshipUpdate'
+      responses:
+        '200':
+          description: Relationship updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relationship'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags: [Relationships]
+      summary: Delete relationship
+      responses:
+        '204':
+          description: Relationship deleted
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # Diagrams
+  /diagrams:
+    get:
+      tags: [Diagrams]
+      summary: List all diagrams
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/PageSizeParam'
+        - name: tag
+          in: query
+          schema:
+            type: string
+          description: Filter by tag
+      responses:
+        '200':
+          description: List of diagrams
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DiagramSummary'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+    post:
+      tags: [Diagrams]
+      summary: Create new diagram
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiagramCreate'
+      responses:
+        '201':
+          description: Diagram created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Diagram'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /diagrams/{diagramId}:
+    parameters:
+      - name: diagramId
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      tags: [Diagrams]
+      summary: Get diagram with full details
+      responses:
+        '200':
+          description: Diagram with all objects and relationships
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Diagram'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Diagrams]
+      summary: Update diagram metadata
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiagramUpdate'
+      responses:
+        '200':
+          description: Diagram updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Diagram'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags: [Diagrams]
+      summary: Delete diagram
+      responses:
+        '204':
+          description: Diagram deleted
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /diagrams/{diagramId}/objects:
+    parameters:
+      - name: diagramId
+        in: path
+        required: true
+        schema:
+          type: integer
+    post:
+      tags: [Diagrams]
+      summary: Add object to diagram
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiagramObjectCreate'
+      responses:
+        '201':
+          description: Object added to diagram
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiagramObject'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /diagrams/{diagramId}/objects/{objectId}:
+    parameters:
+      - name: diagramId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: objectId
+        in: path
+        required: true
+        schema:
+          type: integer
+    put:
+      tags: [Diagrams]
+      summary: Update object position/style on diagram
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiagramObjectUpdate'
+      responses:
+        '200':
+          description: Object updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiagramObject'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags: [Diagrams]
+      summary: Remove object from diagram
+      responses:
+        '204':
+          description: Object removed from diagram
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  schemas:
+    # User
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+          format: email
+        username:
+          type: string
+        fullName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    # Superdomain
+    Superdomain:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        createdBy:
+          $ref: '#/components/schemas/User'
+
+    SuperdomainCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+
+    SuperdomainUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+
+    # Domain
+    Domain:
+      type: object
+      properties:
+        id:
+          type: integer
+        superdomainId:
+          type: integer
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    DomainCreate:
+      type: object
+      required: [superdomainId, name]
+      properties:
+        superdomainId:
+          type: integer
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+
+    DomainUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+
+    # Entity
+    Entity:
+      type: object
+      properties:
+        id:
+          type: integer
+        domainId:
+          type: integer
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    EntityCreate:
+      type: object
+      required: [domainId, name]
+      properties:
+        domainId:
+          type: integer
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+
+    EntityUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+
+    # Attribute
+    Attribute:
+      type: object
+      properties:
+        id:
+          type: integer
+        entityId:
+          type: integer
+        name:
+          type: string
+          maxLength: 100
+        dataType:
+          type: string
+          enum: [String, Text, Integer, BigInteger, Float, Decimal, Boolean, Date, DateTime, Time, UUID, JSON]
+        isNullable:
+          type: boolean
+          default: true
+        defaultValue:
+          type: string
+        description:
+          type: string
+        constraints:
+          type: object
+        dataQualityRules:
+          type: object
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    AttributeCreate:
+      type: object
+      required: [name, dataType]
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        dataType:
+          type: string
+        isNullable:
+          type: boolean
+        defaultValue:
+          type: string
+        description:
+          type: string
+        constraints:
+          type: object
+        dataQualityRules:
+          type: object
+
+    AttributeUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        dataType:
+          type: string
+        isNullable:
+          type: boolean
+        defaultValue:
+          type: string
+        description:
+          type: string
+        constraints:
+          type: object
+        dataQualityRules:
+          type: object
+
+    # Relationship
+    Relationship:
+      type: object
+      properties:
+        id:
+          type: integer
+        sourceEntityId:
+          type: integer
+        targetEntityId:
+          type: integer
+        sourceRole:
+          type: string
+        targetRole:
+          type: string
+        sourceCardinality:
+          type: string
+          enum: [ZERO_ONE, ONE, ZERO_MANY, ONE_MANY]
+        targetCardinality:
+          type: string
+          enum: [ZERO_ONE, ONE, ZERO_MANY, ONE_MANY]
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    RelationshipCreate:
+      type: object
+      required: [sourceEntityId, targetEntityId, sourceCardinality, targetCardinality]
+      properties:
+        sourceEntityId:
+          type: integer
+        targetEntityId:
+          type: integer
+        sourceRole:
+          type: string
+        targetRole:
+          type: string
+        sourceCardinality:
+          type: string
+          enum: [ZERO_ONE, ONE, ZERO_MANY, ONE_MANY]
+        targetCardinality:
+          type: string
+          enum: [ZERO_ONE, ONE, ZERO_MANY, ONE_MANY]
+        description:
+          type: string
+
+    RelationshipUpdate:
+      type: object
+      properties:
+        sourceRole:
+          type: string
+        targetRole:
+          type: string
+        sourceCardinality:
+          type: string
+          enum: [ZERO_ONE, ONE, ZERO_MANY, ONE_MANY]
+        targetCardinality:
+          type: string
+          enum: [ZERO_ONE, ONE, ZERO_MANY, ONE_MANY]
+        description:
+          type: string
+
+    # Diagram
+    DiagramSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    Diagram:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        purpose:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        canvasSettings:
+          type: object
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiagramObject'
+        relationships:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiagramRelationship'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    DiagramCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+        purpose:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+
+    DiagramUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+        purpose:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        canvasSettings:
+          type: object
+
+    # DiagramObject
+    DiagramObject:
+      type: object
+      properties:
+        id:
+          type: integer
+        diagramId:
+          type: integer
+        objectType:
+          type: string
+          enum: [SUPERDOMAIN, DOMAIN, ENTITY]
+        objectId:
+          type: integer
+        positionX:
+          type: number
+        positionY:
+          type: number
+        width:
+          type: number
+        height:
+          type: number
+        zIndex:
+          type: integer
+        visualStyle:
+          type: object
+        isCollapsed:
+          type: boolean
+
+    DiagramObjectCreate:
+      type: object
+      required: [objectType, objectId, positionX, positionY]
+      properties:
+        objectType:
+          type: string
+          enum: [SUPERDOMAIN, DOMAIN, ENTITY]
+        objectId:
+          type: integer
+        positionX:
+          type: number
+        positionY:
+          type: number
+        width:
+          type: number
+        height:
+          type: number
+        visualStyle:
+          type: object
+
+    DiagramObjectUpdate:
+      type: object
+      properties:
+        positionX:
+          type: number
+        positionY:
+          type: number
+        width:
+          type: number
+        height:
+          type: number
+        zIndex:
+          type: integer
+        visualStyle:
+          type: object
+        isCollapsed:
+          type: boolean
+
+    # DiagramRelationship
+    DiagramRelationship:
+      type: object
+      properties:
+        id:
+          type: integer
+        diagramId:
+          type: integer
+        relationshipId:
+          type: integer
+        isVisible:
+          type: boolean
+        sourceAnchor:
+          type: string
+        targetAnchor:
+          type: string
+        visualStyle:
+          type: object
+
+    # Common
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        total:
+          type: integer
+        totalPages:
+          type: integer
+
+    DeleteImpact:
+      type: object
+      properties:
+        message:
+          type: string
+        affectedDiagrams:
+          type: array
+          items:
+            type: string
+        affectedEntities:
+          type: array
+          items:
+            type: string
+        cascade:
+          type: boolean
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+    PageSizeParam:
+      name: pageSize
+      in: query
+      schema:
+        type: integer
+        default: 100
+        minimum: 1
+        maximum: 500
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - BearerAuth: []
