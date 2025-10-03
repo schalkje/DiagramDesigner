@@ -201,12 +201,12 @@ This task breakdown implements a three-tier web application (React frontend, Fla
 
 ## Phase 3.7: Frontend - TypeScript Types & API Client (6 tasks)
 
-- [ ] **T062** Generate TypeScript types from OpenAPI schema in frontend/src/types/api.ts (User, Superdomain, Domain, Entity, Attribute, Relationship, Diagram, DiagramObject schemas)
-- [ ] **T063** Create API client base in frontend/src/services/api-client.ts (Axios instance with Bearer token interceptor, error handling)
-- [ ] **T064** [P] Create SuperdomainAPI, DomainAPI, EntityAPI services in frontend/src/services/object-repository-api.ts (CRUD methods using typed requests/responses)
-- [ ] **T065** [P] Create AttributeAPI, RelationshipAPI services in frontend/src/services/relationship-api.ts
-- [ ] **T066** [P] Create DiagramAPI service in frontend/src/services/diagram-api.ts (CRUD diagrams, add/update/remove objects)
-- [ ] **T067** [P] Create AuthAPI service in frontend/src/services/auth-api.ts (login, register methods)
+- [x] **T062** Generate TypeScript types from OpenAPI schema in frontend/src/types/api.ts (User, Superdomain, Domain, Entity, Attribute, Relationship, Diagram, DiagramObject schemas)
+- [x] **T063** Create API client base in frontend/src/services/api-client.ts (Axios instance with Bearer token interceptor, error handling)
+- [x] **T064** [P] Create SuperdomainAPI, DomainAPI, EntityAPI services in frontend/src/services/object-repository-api.ts (CRUD methods using typed requests/responses)
+- [x] **T065** [P] Create AttributeAPI, RelationshipAPI services in frontend/src/services/relationship-api.ts
+- [x] **T066** [P] Create DiagramAPI service in frontend/src/services/diagram-api.ts (CRUD diagrams, add/update/remove objects)
+- [x] **T067** [P] Create AuthAPI service in frontend/src/services/auth-api.ts (login, register methods)
 
 **Dependencies**: T062 before all API services; T063 before T064-T067; T064-T067 [P] after T063
 
@@ -214,10 +214,10 @@ This task breakdown implements a three-tier web application (React frontend, Fla
 
 ## Phase 3.8: Frontend - State Management (4 tasks)
 
-- [ ] **T068** Create Zustand store structure in frontend/src/store/index.ts (slices for auth, repository, diagrams)
-- [ ] **T069** [P] Create auth store in frontend/src/store/auth-store.ts (user state, login/logout actions, JWT token persistence)
-- [ ] **T070** [P] Create repository store in frontend/src/store/repository-store.ts (superdomains, domains, entities, attributes tree structure, CRUD actions)
-- [ ] **T071** [P] Create diagram store in frontend/src/store/diagram-store.ts (active diagram, objects, relationships, canvas settings, position updates)
+- [x] **T068** Create Zustand store structure in frontend/src/store/index.ts (slices for auth, repository, diagrams)
+- [x] **T069** [P] Create auth store in frontend/src/store/auth-store.ts (user state, login/logout actions, JWT token persistence)
+- [x] **T070** [P] Create repository store in frontend/src/store/repository-store.ts (superdomains, domains, entities, attributes tree structure, CRUD actions)
+- [x] **T071** [P] Create diagram store in frontend/src/store/diagram-store.ts (active diagram, objects, relationships, canvas settings, position updates)
 
 **Dependencies**: T068 before stores; T069-T071 [P] after T068 and API services (T064-T067)
 
@@ -226,24 +226,24 @@ This task breakdown implements a three-tier web application (React frontend, Fla
 ## Phase 3.9: Frontend - React Components (12 tasks)
 
 ### Authentication Components
-- [ ] **T072** [P] Create Login component in frontend/src/components/Auth/Login.tsx (form with email/password, calls AuthAPI, updates auth store)
-- [ ] **T073** [P] Create Register component in frontend/src/components/Auth/Register.tsx (form with validation)
+- [x] **T072** [P] Create Login component in frontend/src/components/Auth/Login.tsx (form with email/password, calls AuthAPI, updates auth store)
+- [x] **T073** [P] Create Register component in frontend/src/components/Auth/Register.tsx (form with validation)
 
 ### Repository Browser Components
-- [ ] **T074** [P] Create RepositoryTree component in frontend/src/components/Repository/RepositoryTree.tsx (hierarchical tree view: Superdomain → Domain → Entity, drag support for diagram)
-- [ ] **T075** [P] Create EntityCard component in frontend/src/components/Repository/EntityCard.tsx (displays entity with attributes list, editable)
-- [ ] **T076** [P] Create SuperdomainForm component in frontend/src/components/Repository/SuperdomainForm.tsx (create/edit superdomain with name and description)
-- [ ] **T077** [P] Create DomainForm component in frontend/src/components/Repository/DomainForm.tsx (create/edit domain with parent superdomain selector)
-- [ ] **T078** [P] Create EntityForm component in frontend/src/components/Repository/EntityForm.tsx (create/edit entity with domain selector)
-- [ ] **T079** [P] Create AttributeForm component in frontend/src/components/Repository/AttributeForm.tsx (create/edit attribute with data type dropdown, nullable checkbox, constraints JSONB editor)
+- [x] **T074** [P] Create RepositoryTree component in frontend/src/components/Repository/RepositoryTree.tsx (hierarchical tree view: Superdomain → Domain → Entity, drag support for diagram)
+- [x] **T075** [P] Create EntityCard component in frontend/src/components/Repository/EntityCard.tsx (displays entity with attributes list, editable)
+- [x] **T076** [P] Create SuperdomainForm component in frontend/src/components/Repository/SuperdomainForm.tsx (create/edit superdomain with name and description)
+- [x] **T077** [P] Create DomainForm component in frontend/src/components/Repository/DomainForm.tsx (create/edit domain with parent superdomain selector)
+- [x] **T078** [P] Create EntityForm component in frontend/src/components/Repository/EntityForm.tsx (create/edit entity with domain selector)
+- [x] **T079** [P] Create AttributeForm component in frontend/src/components/Repository/AttributeForm.tsx (create/edit attribute with data type dropdown, nullable checkbox, constraints JSONB editor)
 
 ### Diagram Canvas Components (React-Flow)
-- [ ] **T080** [P] Create DiagramCanvas component in frontend/src/components/Diagram/DiagramCanvas.tsx (React-Flow canvas with zoom/pan/grid, handles drag events, updates diagram store on position change)
-- [ ] **T081** [P] Create EntityNode component in frontend/src/components/Diagram/EntityNode.tsx (custom React-Flow node displaying entity with attributes, collapsible)
-- [ ] **T082** [P] Create RelationshipEdge component in frontend/src/components/Diagram/RelationshipEdge.tsx (custom React-Flow edge with crow's foot notation for cardinality: 1, 0..1, N, 1..N)
+- [x] **T080** [P] Create DiagramCanvas component in frontend/src/components/Diagram/DiagramCanvas.tsx (React-Flow canvas with zoom/pan/grid, handles drag events, updates diagram store on position change)
+- [x] **T081** [P] Create EntityNode component in frontend/src/components/Diagram/EntityNode.tsx (custom React-Flow node displaying entity with attributes, collapsible)
+- [x] **T082** [P] Create RelationshipEdge component in frontend/src/components/Diagram/RelationshipEdge.tsx (custom React-Flow edge with crow's foot notation for cardinality: 1, 0..1, N, 1..N)
 
 ### Diagram Management Components
-- [ ] **T083** [P] Create DiagramList component in frontend/src/components/Diagram/DiagramList.tsx (list diagrams with tags, search/filter)
+- [x] **T083** [P] Create DiagramList component in frontend/src/components/Diagram/DiagramList.tsx (list diagrams with tags, search/filter)
 
 **Dependencies**: T072-T083 all [P] after stores (T069-T071) and API services (T064-T067)
 
